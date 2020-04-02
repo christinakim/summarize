@@ -74,9 +74,14 @@ javascript:(function () {
   request.open("GET", serverUrl+'?text='+textToSummarize, true);
   request.onreadystatechange = function () {
     var done = 4, ok = 200;
-    if (request.readyState == done && request.status == ok) {
+    alert('OK');
+
+    if (request.readyState == done) {
       if (request.responseText) {
         alert(request.responseText);
+      } else {
+        alert('OK');
+
       }
     }
   };
