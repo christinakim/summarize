@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import include, path
 from rest_framework import routers
 from summarize.app import views
@@ -10,5 +11,7 @@ router.register(r'groups', views.GroupViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('', include(router.urls)),
+    path('summarize', views.summarize),
+
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

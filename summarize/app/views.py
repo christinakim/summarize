@@ -1,9 +1,15 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
+from transformers import pipeline
 
 from summarize.app.serializers import GroupSerializer
 from summarize.app.serializers import UserSerializer
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+summarizer = pipeline('summarization')
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,3 +28,12 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+@api_view(['GET'])
+def summarize(request):
+    text_to_summarize = request.query_params.get('text', None)
+    print(text_to_summarize)
+    if request.method == 'GET':
+        summary = summarizer(text_to_summarize)
+        print(summary)
+        return Response(summary, status=status.HTTP_201_CREATED)
