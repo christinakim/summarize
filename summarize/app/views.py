@@ -11,6 +11,16 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+# look into lazily loading this:
+# class LazyPipeline:
+#     def __init__(self):
+#         self.pipeline_obj = None
+#     def __call__(self, *args, **kwargs):
+#         if self.pipeline_obj is None:
+#             self.pipeline_obj = pipeline("thingy")
+#         return self.pipeline_obj(*args, **kwargs)
+# my_pipeline = LazyPipeline()
+
 summarizer = pipeline('summarization')
 
 
